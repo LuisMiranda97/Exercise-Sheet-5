@@ -1,0 +1,43 @@
+Hash Cracking
+https://www.hackthissite.org/missions/realistic/5/
+
+It's the process of cracking a password when the hash is given and the algorithm used to hash. If the algorithm is not safe enough, a tool such as John the Ripper can be helpful to crack the password.
+
+On this mission, we have to crack the password used to access the database. First step was to notice on the News section, that the admin said something about Google indexing pages that were not supposed to:
+
+"9/15/03 - Google was grabbing links it shouldn't be so I have taken extra precautions."
+
+When a website doesn't want to index certain pages, this are specified in a text file called robots.txt, which we can take a look through this url
+
+https://www.hackthissite.org/missions/realistic/5/robots.txt
+
+And this is what it shows:
+User-agent: *
+Disallow: /lib
+Disallow: /secret
+
+Next step is to access both of this indexes the same way we accessed robots.txt
+
+https://www.hackthissite.org/missions/realistic/5/secret/
+This index shows the admin.bak.php and admin.php. The first one will show a message:
+
+error matching hash 109328795581948eac7b28486adca289
+
+This is the first step to cracking a password all, we need now is the algorithm used to hash this.
+
+When we access:
+https://www.hackthissite.org/missions/realistic/5/lib/
+
+We can download a file called hash which most of it cannot be read, but at the bottom it mentions constantly MD4, a hashing algorithm that it's not used anymore, it can be cracked. That is the reason why the message mentioned something about data 10 years old.
+
+Now knowing the hash and the algorithm, the tool John the Ripper can help us with this command:
+
+john --format=Raw-MD4 hash_md4.txt --show
+
+hash_md4.txt is a text file that contains just the hash
+
+The password is 0fb74
+
+Reference:
+https://owasp.org/www-project-cheat-sheets/cheatsheets/Password_Storage_Cheat_Sheet.html#how-attackers-crack-password-hashes
+

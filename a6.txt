@@ -1,0 +1,33 @@
+Apache authentication
+https://www.hackthissite.org/missions/realistic/7/
+
+In this mission we have to crack a password and username once again with John the Ripper. 
+
+Since we have to use directory traversal, we look for that in the directory. We can only find one directory mentioned which is /images.
+
+Accessing /images shows us an index with mostly images and a directory labeled admin/
+
+When we access this directory, we require the authentication in order for the server to grant us access, this is what we have to find.
+
+We have noticed that in the url there is a PHP file and a parameter called "file".
+This parameter is the one that decides what to load on the page, and everything that is loaded comes from the same directory images. We can try to tamper this parameter and ask the server to load the file that has the user and password. 
+
+In an apache server, the hash of the users and passwords are stored in a file called .htpasswd. Therefore, we tamper the parameter like this.
+
+https://www.hackthissite.org/missions/realistic/7/showimages.php?file=/images/admin/.htpasswd
+
+At plain sight it seems nothing is showed, but looking at the source code we notice that the page loaded a hash instead of an image:
+
+administrator:$1$AAODv...$gXPqGkIO3Cu6dnclE/sok1
+
+We simply copy this hash and pass it to John the Ripper with the format md5crypt.
+
+john --format=md5crypt hash_md5.txt --show
+Administrator:shadow
+
+1 password hash cracked, 0 left
+
+The user administrator and password shadow gives us access to the server
+
+Reference:
+https://httpd.apache.org/docs/2.4/programs/htpasswd.html

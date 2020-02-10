@@ -1,0 +1,18 @@
+Directory Traversal
+https://www.hackthissite.org/missions/realistic/3/
+
+This attack aims to access files and directories that are stored outside the web root folder. By manipulating variables that reference files with "../" it may be possible to access arbitrary files and directories stored on the file system. 
+
+In this mission, first we access the previous index page, which the hacker left a clue where it was: oldindex.html.
+
+https://www.hackthissite.org/missions/realistic/3/oldindex.html
+
+Then we copy the source code of this page, and then access the submit poetry system.
+
+
+On the "Name of poem" input field, we write "../index.html". Since /index.html is right now the hacked document, we access this directory through the exploit and put the new source code.
+
+And then on the "Poem" input field, the source code we just copied. This way we restore the website by accessing the index.html and writing new code.
+
+Reference:
+https://owasp.org/www-community/attacks/Path_Traversal

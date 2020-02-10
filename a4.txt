@@ -1,0 +1,27 @@
+SQL injection
+https://www.hackthissite.org/missions/realistic/4/
+
+Another Sql injection attack is the SQL injection union. This type of attacks are known to be used to extract information from the database.
+
+In this mission, we are required to retrieve the email of the people registered in the mailing list. When we input a valid email, we just get a notification message. Otherwise, we get an error that it was not able to insert in the "email" table, which is giving us information of which table to retrieve.
+
+Accessing either the fur coats or the alligator accessories, we notice that the url has a category parameter:
+
+https://www.hackthissite.org/missions/realistic/4/products.php?category=1
+https://www.hackthissite.org/missions/realistic/4/products.php?category=2
+
+For a UNION query to work, two key requirements must be met:
+
+The individual queries must return the same number of columns.
+The data types in each column must be compatible between the individual queries.
+
+That is a query to the database to retrieve the information regarding the category.
+Next we have to find out how many columns are there in this category. Through the Order By sql command we can find out the number of columns. Which is 4 columns.
+
+Doing a union select we can craft a sql statement:
+Select null, null,*,null from emails
+
+Which we will retrieve the emails on the email table. Then all we do is send a message to SaveTheWhales with the hackthissite message system
+
+Reference:
+https://www.hackthissite.org/missions/realistic/4/products.php?category=2%20union%20all%20select%20null,null,*,null%20from%20email

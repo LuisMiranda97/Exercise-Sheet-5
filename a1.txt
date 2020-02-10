@@ -1,0 +1,17 @@
+Parameter verification
+Also known as parameter tampering, is when we manipulate the parameters exchanged between the client and the server. It can be done through URL query string. In this case, the voting system collects votes and makes an average of points, which then is used to place the bands in a certain order. 
+
+The URL looks like this at the beginning:
+https://www.hackthissite.org/missions/realistic/1/
+
+Looking at the source code we notice the form has an action="v.php", which is the script that executes when voting. There are two hidden values which PHPSESSID="abcaeadfc31a5c43b2534bf995c0553f"
+id="3"
+
+These parameters help us identify which band we want to vote for. Lastly, we tamper the value parameter to a big number in order to manipulate the average and this way we send all this data to the server through a URL query. Which at the end looks like this
+
+https://www.hackthissite.org/missions/realistic/1/v.php?PHPSESSID=abcaeadfc31a5c43b2534bf995c0553f&id=3&value=100
+
+And this way it will place the band at the top
+
+Reference:
+https://owasp.org/www-community/attacks/Web_Parameter_Tampering

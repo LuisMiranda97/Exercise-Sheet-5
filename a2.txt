@@ -1,0 +1,16 @@
+SQL Injection
+https://www.hackthissite.org/missions/realistic/2/
+
+SQL Injection is when we input a SQL command on some of the website's input box. For this mission we need access to the system admin page. At first there is no input field on the website, but there is a hidden link which is identified on the source page or by selecting the whole webpage and notice the hidden link. 
+This link will redirect us to login page. The way this exploit works is that we force the input to recognize the input as a true statement through an SQL statement.
+
+We input this on both the user and the password input box
+' or ''='
+
+Which will then be passed down to the database as this statement:
+SELECT * FROM Users WHERE Name ='' or ''='' AND Pass ='' or ''=''
+
+This statement will always be true, it will be accepted by the database and give us access.
+
+Reference:
+https://www.w3schools.com/sql/sql_injection.asp
